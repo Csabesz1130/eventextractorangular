@@ -1,0 +1,20 @@
+<mat-card class="card">
+  <div class="badge">
+    <span class="chip">{{ event.source || 'AI' }}</span>
+    <span class="conf">Confidence: {{ (event.confidence || 0) * 100 | number:'1.0-0' }}%</span>
+  </div>
+  <div class="title">
+    <mat-icon>event</mat-icon>
+    <h3>{{ event.title || 'Untitled' }}</h3>
+  </div>
+  <div class="meta">
+    <div><mat-icon>schedule</mat-icon><span>{{ timeRange }}</span></div>
+    <div *ngIf="event.location"><mat-icon>place</mat-icon><span>{{ event.location }}</span></div>
+  </div>
+  <p class="desc" *ngIf="event.description">{{ event.description }}</p>
+  <div class="actions">
+    <button mat-raised-button color="primary" (click)="approve.emit()">Approve</button>
+    <button mat-stroked-button (click)="snooze.emit()">Snooze</button>
+  </div>
+</mat-card>
+

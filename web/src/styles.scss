@@ -1,0 +1,94 @@
+:root {
+  --bg: #0d0f12;
+  --card: #141821;
+  --text: #e7ecf3;
+  --muted: #aab3c2;
+  --primary: #6a9eff;
+  --accent: #8cffd2;
+  --ring: rgba(106, 158, 255, 0.35);
+  --radius: 16px;
+}
+
+:root,
+:root.dark {
+  color-scheme: dark;
+  background: radial-gradient(1000px 600px at 10% -10%, #1b2230 0%, #0d0f12 50%) fixed;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.mat-mdc-card {
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+button.mat-mdc-button,
+button.mat-mdc-raised-button {
+  border-radius: 999px;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+// Material theme overrides
+.mat-mdc-toolbar {
+  background: transparent !important;
+}
+
+.mat-mdc-sidenav {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.mat-mdc-list-item {
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+.mat-mdc-list-item:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+// Navigation icons
+.mat-mdc-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.mat-mdc-list-item mat-icon {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+// Textarea styling
+textarea {
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+

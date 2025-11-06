@@ -1,0 +1,43 @@
+.inbox {
+  padding: 20px;
+}
+
+.inbox h2 {
+  margin-bottom: 20px;
+}
+
+.inbox > div:first-of-type {
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 4px;
+}
+
+.inbox label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.inbox input[type="text"] {
+  width: 100%;
+  max-width: 500px;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.inbox button {
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.inbox button:hover {
+  background: #0056b3;
+}
+

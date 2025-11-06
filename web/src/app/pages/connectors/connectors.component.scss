@@ -1,0 +1,21 @@
+.wrap {
+  padding: 16px;
+}
+
+.muted {
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+section {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+

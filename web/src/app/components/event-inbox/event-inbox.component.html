@@ -1,0 +1,12 @@
+<div class="inbox">
+  <h2>Event Inbox</h2>
+  <div>
+    <label>Quick test extract:</label>
+    <input #txt type="text" placeholder="Paste text here" />
+    <button (click)="testExtractManual(txt.value)">Extract</button>
+  </div>
+  <div *ngFor="let e of suggestions">
+    <app-event-card [event]="e" (approved)="onApproved($event)"></app-event-card>
+  </div>
+</div>
+

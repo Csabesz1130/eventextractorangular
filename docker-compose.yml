@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  extraction:
+    build:
+      context: ./api/extraction-service
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - EXTRACTOR_DATABASE_URL=${EXTRACTOR_DATABASE_URL}
+      - GOOGLE_CLIENT_SECRETS_FILE=${GOOGLE_CLIENT_SECRETS_FILE}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - EXTRACT_CONFIDENCE_THRESHOLD=${EXTRACT_CONFIDENCE_THRESHOLD}
+    ports:
+      - "${EXTRACTION_PORT:-8080}:8080"
+    volumes:
+      - ./api/extraction-service:/app
+    depends_on:
+      - duckling
+
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "3000:80"  # nginx serving static files (production)
+    depends_on:
+      - extraction
+
+  duckling:
+    image: rasa/duckling:latest
+    environment:
+      - TZ=UTC
+    ports:
+      - "8000:8000"
+    restart: always
+

@@ -1,0 +1,23 @@
+<div class="inbox" [@fadeSlideIn]>
+  <div class="header">
+    <h2>Event Inbox</h2>
+    <p class="muted">AI suggestions from your emails, SMS, and pages.</p>
+  </div>
+  <div *ngIf="loading" class="center">
+    <app-spinner></app-spinner>
+  </div>
+  <div class="grid">
+    <app-suggestion-card
+      *ngFor="let s of suggestions"
+      [event]="s"
+      (approve)="onApprove(s)"
+      (snooze)="onSnooze(s)">
+    </app-suggestion-card>
+  </div>
+  <div *ngIf="!suggestions.length && !loading" class="empty">
+    <mat-icon>inbox</mat-icon>
+    <h3>No suggestions yet</h3>
+    <p>Paste text with Quick Add or connect Gmail.</p>
+  </div>
+</div>
+

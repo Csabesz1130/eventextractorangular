@@ -1,0 +1,58 @@
+.card {
+  padding: 16px;
+}
+
+.badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.chip {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(138, 180, 255, 0.16);
+  border: 1px solid rgba(106, 158, 255, 0.35);
+}
+
+.conf {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0 2px;
+}
+
+.title h3 {
+  margin: 0;
+}
+
+.meta {
+  display: grid;
+  gap: 6px;
+  margin: 6px 0 12px;
+}
+
+.meta div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.desc {
+  opacity: 0.9;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+

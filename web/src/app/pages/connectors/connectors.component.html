@@ -1,0 +1,15 @@
+<div class="wrap">
+  <h2>Connectors</h2>
+  <p class="muted">Bring your emails, SMS, and pages into EventFlow.</p>
+  <section>
+    <app-connector-badge name="Google (Gmail + Calendar)" [connected]="googleConnected"></app-connector-badge>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="connectGoogle()">
+        <mat-icon>link</mat-icon> Connect Google
+      </button>
+      <button mat-stroked-button (click)="pollOnce()"><mat-icon>refresh</mat-icon> Poll once</button>
+    </div>
+  </section>
+  <!-- Future: Outlook, Apple (ICS), Twilio SMS, Browser Extension -->
+</div>
+

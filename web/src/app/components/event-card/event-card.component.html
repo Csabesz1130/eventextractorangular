@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-header">
+    <small class="source">{{ event.source || 'suggestion' }}</small>
+    <span class="confidence">Confidence: {{ (event.confidence || 0) * 100 | number:'1.0-0' }}%</span>
+  </div>
+  <div class="card-body">
+    <h3>{{ event.title || 'Untitled' }}</h3>
+    <p>
+      <strong>When:</strong> {{ event.start | date:'short' }}
+      <span *ngIf="event.end"> — {{ event.end | date:'short' }}</span>
+    </p>
+    <p *ngIf="event.location"><strong>Where:</strong> {{ event.location }}</p>
+    <p *ngIf="event.attendees?.length"><strong>Attendees:</strong> {{ event.attendees.join(', ') }}</p>
+    <p>{{ event.description }}</p>
+  </div>
+  <div class="card-actions">
+    <button (click)="onApprove()" [disabled]="busy">Approve</button>
+    <button (click)="/* implement snooze */">Snooze</button>
+  </div>
+</div>
+

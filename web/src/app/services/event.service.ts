@@ -18,7 +18,7 @@ export interface EventSuggestion {
 
 @Injectable({ providedIn: 'root' })
 export class EventService {
-  private base = '/api'; // nginx proxy → extraction service
+  private base = 'http://localhost:8080'; // Direct connection in dev; use /api in production
 
   private _suggestions$ = new BehaviorSubject<EventSuggestion[]>([]);
   suggestions$ = this._suggestions$.asObservable();

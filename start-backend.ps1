@@ -1,5 +1,6 @@
 # Start Backend Extraction Service
 cd api/extraction-service
 .venv\Scripts\activate
-$env:OPENAI_API_KEY="***REMOVED***"
+# Load environment variables from .env file
+# Make sure to set OPENAI_API_KEY in your .env file
 python -m uvicorn main:app --reload --port 8080

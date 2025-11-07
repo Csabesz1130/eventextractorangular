@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup">
+    <div class="header">
+      <img src="../icons/icon48.png" alt="EventFlow">
+      <h2>EventFlow</h2>
+    </div>
+    
+    <div id="latestEvent" class="event-card" style="display:none;">
+      <h3 id="eventTitle"></h3>
+      <p id="eventTime"></p>
+      <p id="eventLocation"></p>
+      <div class="actions">
+        <button id="approveBtn" class="btn-primary">Approve</button>
+        <button id="editBtn" class="btn-secondary">Edit</button>
+      </div>
+    </div>
+    
+    <div id="noEvent" class="empty">
+      <p>No recent extractions</p>
+      <p class="hint">Select text and right-click → Extract Event</p>
+    </div>
+    
+    <div class="footer">
+      <a href="https://your-domain.com/inbox" target="_blank">Open EventFlow →</a>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
+

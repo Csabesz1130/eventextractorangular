@@ -14,13 +14,15 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   exports: [
     MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatSidenavModule,
     MatListModule, MatMenuModule, MatInputModule, MatChipsModule, MatTooltipModule,
     MatSnackBarModule, MatDividerModule, MatSlideToggleModule, MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule, MatCheckboxModule, MatFormFieldModule
   ]
 })
 export class MaterialModule {}

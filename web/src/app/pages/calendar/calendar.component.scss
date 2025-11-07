@@ -1,5 +1,37 @@
 .wrap {
   padding: 16px;
+  height: calc(100vh - 120px);
+  
+  ::ng-deep {
+    .fc {
+      background: transparent;
+      color: var(--text);
+    }
+    
+    .fc-theme-standard td,
+    .fc-theme-standard th {
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .fc-button-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      
+      &:hover {
+        background: var(--primary);
+        opacity: 0.8;
+      }
+    }
+    
+    .fc-daygrid-day {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    
+    .fc-event {
+      border-radius: 4px;
+      border: none;
+    }
+  }
 }
 
 .muted {

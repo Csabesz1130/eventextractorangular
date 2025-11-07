@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  background: #0d0f12;
+  color: #e7ecf3;
+}
+
+.popup {
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.header img {
+  width: 32px;
+  height: 32px;
+}
+
+.header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.event-card {
+  padding: 12px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.event-card h3 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.event-card p {
+  font-size: 14px;
+  color: #aab3c2;
+  margin-bottom: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-primary {
+  background: #6a9eff;
+  color: white;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #e7ecf3;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  opacity: 0.8;
+}
+
+.empty {
+  text-align: center;
+  padding: 24px 12px;
+  color: #aab3c2;
+}
+
+.empty .hint {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  text-align: center;
+}
+
+.footer a {
+  color: #6a9eff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+

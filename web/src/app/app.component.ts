@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { ThemeService } from './core/theme.service';
 import { fadeSlideIn } from './core/animations';
 import { EventService } from './services/event.service';
@@ -19,7 +19,7 @@ export class AppComponent {
   constructor(
     private theme: ThemeService,
     private events: EventService,
-    router: Router
+    private router: Router
   ) {
     theme.init();
     router.events
@@ -33,6 +33,34 @@ export class AppComponent {
         };
         this.pageTitle = map[e.urlAfterRedirects] || 'EventFlow';
       });
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyboard(e: KeyboardEvent) {
+    // Cmd/Ctrl + K for Quick Add
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      this.openQuickAdd();
+      return;
+    }
+
+    // Cmd/Ctrl + / for search (placeholder)
+    if ((e.metaKey || e.ctrlKey) && e.key === '/') {
+      e.preventDefault();
+      // TODO: Focus search when implemented
+      return;
+    }
+
+    // Inbox-specific shortcuts
+    if (this.router.url === '/inbox') {
+      // 'a' to approve first, 's' to snooze first
+      // 'j' and 'k' for navigation (can be added later)
+      if (e.key === 'a' && !e.metaKey && !e.ctrlKey) {
+        // This would need to be handled by inbox component
+        // For now, just prevent default
+        e.preventDefault();
+      }
+    }
   }
 
   toggleDark() {

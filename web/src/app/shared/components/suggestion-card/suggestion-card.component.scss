@@ -1,5 +1,28 @@
 .card {
   padding: 16px;
+  transition: all 0.2s ease;
+  
+  &.high-conf {
+    border-left: 3px solid var(--accent);
+  }
+  
+  &.med-conf {
+    border-left: 3px solid var(--primary);
+  }
+  
+  &.low-conf {
+    border-left: 3px solid var(--muted);
+    opacity: 0.85;
+  }
+  
+  &.selected {
+    background: rgba(106, 158, 255, 0.1);
+    border: 1px solid var(--primary);
+  }
+  
+  &.editing {
+    border: 2px solid var(--primary);
+  }
 }
 
 .badge {
@@ -7,6 +30,33 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+  
+  .left-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.edit-btn {
+  margin-left: auto;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.view-mode, .edit-mode {
+  width: 100%;
+}
+
+.edit-mode {
+  .full-width {
+    width: 100%;
+    margin-bottom: 8px;
+  }
 }
 
 .chip {

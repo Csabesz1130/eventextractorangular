@@ -13,6 +13,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { SuggestionCardComponent } from './shared/components/suggestion-card/suggestion-card.component';
 import { ConnectorBadgeComponent } from './shared/components/connector-badge/connector-badge.component';
 import { SpinnerComponent } from './shared/components/spinner/spinner.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SpinnerComponent } from './shared/components/spinner/spinner.component'
     HttpClientModule,
     FormsModule,
     MaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FullCalendarModule
   ],
   bootstrap: [AppComponent]
 })

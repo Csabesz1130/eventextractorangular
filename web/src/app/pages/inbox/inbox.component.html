@@ -1,19 +1,50 @@
 <div class="inbox" [@fadeSlideIn]>
   <div class="header">
-    <h2>Event Inbox</h2>
-    <p class="muted">AI suggestions from your emails, SMS, and pages.</p>
+    <div class="header-top">
+      <div>
+        <h2>Event Inbox</h2>
+        <p class="muted">AI suggestions from your emails, SMS, and pages.</p>
+      </div>
+      <button mat-stroked-button (click)="toggleSelectMode()">
+        <mat-icon>{{ selectMode ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+        {{ selectMode ? 'Cancel Selection' : 'Select' }}
+      </button>
+    </div>
   </div>
+  
+  <div class="batch-bar" *ngIf="selectedCount > 0">
+    <span>{{ selectedCount }} selected</span>
+    <div class="batch-actions">
+      <button mat-button (click)="approveSelected()">Approve All</button>
+      <button mat-button (click)="snoozeSelected()">Snooze All</button>
+      <button mat-icon-button (click)="clearSelection()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+  
   <div *ngIf="loading" class="center">
     <app-spinner></app-spinner>
   </div>
-  <div class="grid">
-    <app-suggestion-card
-      *ngFor="let s of suggestions"
-      [event]="s"
-      (approve)="onApprove(s)"
-      (snooze)="onSnooze(s)">
-    </app-suggestion-card>
+  
+  <div *ngIf="!loading && suggestions.length > 0">
+    <div *ngFor="let group of groupedSuggestionsList" class="group">
+      <h3 class="group-title">{{ getGroupLabel(group[0]) }}</h3>
+      <div class="grid">
+        <app-suggestion-card
+          *ngFor="let s of group[1]"
+          [event]="s"
+          [selectable]="selectMode"
+          [selected]="isSelected(s)"
+          (approve)="onApprove(s)"
+          (snooze)="onSnooze(s)"
+          (edit)="onEdit(s)"
+          (select)="onSelect(s, $event)">
+        </app-suggestion-card>
+      </div>
+    </div>
   </div>
+  
   <div *ngIf="!suggestions.length && !loading" class="empty">
     <mat-icon>inbox</mat-icon>
     <h3>No suggestions yet</h3>

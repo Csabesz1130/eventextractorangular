@@ -1,0 +1,42 @@
+{
+  "timeZone": "UTC",
+  "dependencies": {
+    "enabledAdvancedServices": [
+      {
+        "userSymbol": "Gmail",
+        "version": "v1",
+        "serviceId": "gmail"
+      }
+    ]
+  },
+  "gmail": {
+    "name": "EventFlow",
+    "logoUrl": "https://your-domain.com/logo.png",
+    "contextualTriggers": [
+      {
+        "unconditional": {},
+        "onTriggerFunction": "buildAddOn"
+      }
+    ],
+    "composeTrigger": {
+      "selectActions": [
+        {
+          "text": "Extract Event",
+          "runFunction": "extractFromDraft"
+        }
+      ]
+    },
+    "universalActions": [
+      {
+        "label": "Quick Extract",
+        "runFunction": "quickExtract"
+      }
+    ]
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/gmail.readonly",
+    "https://www.googleapis.com/auth/calendar.events",
+    "https://www.googleapis.com/auth/script.external_request"
+  ]
+}
+

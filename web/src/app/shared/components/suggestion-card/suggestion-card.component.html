@@ -1,20 +1,48 @@
-<mat-card class="card">
+<mat-card class="card" [ngClass]="[confidenceClass, {selected: selected, editing: editing}]" (click)="onSelect()">
   <div class="badge">
-    <span class="chip">{{ event.source || 'AI' }}</span>
+    <div class="left-badge">
+      <mat-checkbox *ngIf="selectable" [checked]="selected" (click)="$event.stopPropagation()" (change)="onSelect()"></mat-checkbox>
+      <span class="chip">{{ event.source || 'AI' }}</span>
+    </div>
     <span class="conf">Confidence: {{ (event.confidence || 0) * 100 | number:'1.0-0' }}%</span>
   </div>
-  <div class="title">
-    <mat-icon>event</mat-icon>
-    <h3>{{ event.title || 'Untitled' }}</h3>
+  
+  <div *ngIf="!editing" class="view-mode">
+    <div class="title">
+      <mat-icon>event</mat-icon>
+      <h3>{{ event.title || 'Untitled' }}</h3>
+      <button mat-icon-button class="edit-btn" (click)="startEdit(); $event.stopPropagation()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+    <div class="meta">
+      <div><mat-icon>schedule</mat-icon><span>{{ timeRange }}</span></div>
+      <div *ngIf="event.location"><mat-icon>place</mat-icon><span>{{ event.location }}</span></div>
+    </div>
+    <p class="desc" *ngIf="event.description">{{ event.description }}</p>
+    <div class="actions">
+      <button mat-raised-button color="primary" (click)="approve.emit(); $event.stopPropagation()">Approve</button>
+      <button mat-stroked-button (click)="snooze.emit(); $event.stopPropagation()">Snooze</button>
+    </div>
   </div>
-  <div class="meta">
-    <div><mat-icon>schedule</mat-icon><span>{{ timeRange }}</span></div>
-    <div *ngIf="event.location"><mat-icon>place</mat-icon><span>{{ event.location }}</span></div>
-  </div>
-  <p class="desc" *ngIf="event.description">{{ event.description }}</p>
-  <div class="actions">
-    <button mat-raised-button color="primary" (click)="approve.emit()">Approve</button>
-    <button mat-stroked-button (click)="snooze.emit()">Snooze</button>
+  
+  <div *ngIf="editing" class="edit-mode">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="editedEvent.title" placeholder="Event title">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Start</mat-label>
+      <input matInput type="datetime-local" [(ngModel)]="editedEvent.start">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Location</mat-label>
+      <input matInput [(ngModel)]="editedEvent.location" placeholder="Location">
+    </mat-form-field>
+    <div class="actions">
+      <button mat-button (click)="saveEdit(); $event.stopPropagation()">Save</button>
+      <button mat-button (click)="cancelEdit(); $event.stopPropagation()">Cancel</button>
+    </div>
   </div>
 </mat-card>
 

@@ -1,38 +1,38 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../core/notification.service';
 import { EventService, EventSuggestion } from './event.service';
 
 @Injectable({ providedIn: 'root' })
 export class UndoService {
-  private stack: Array<{ action: string; data: any }> = [];
+  private stack: Array<{ action: string, data: any, undoFn: () => void }> = [];
 
   constructor(
-    private snackBar: MatSnackBar,
+    private notifications: NotificationService,
     private events: EventService
-  ) {}
+  ) { }
 
-  push(action: string, data: any) {
-    this.stack.push({ action, data });
-    this.showUndoToast(action);
+  push(action: string, data: any, undoFn?: () => void) {
+    const undo = undoFn || (() => {
+      if (action === 'approve') {
+        // Re-add suggestion to inbox
+        this.events.pushLocalSuggestion(data as EventSuggestion);
+      }
+    });
+
+    this.stack.push({ action, data, undoFn: undo });
+    this.showUndoToast(action, undo);
   }
 
   undo() {
     const last = this.stack.pop();
-    if (!last) return;
-
-    if (last.action === 'approve') {
-      // Re-add the event to suggestions
-      this.events.pushLocalSuggestion(last.data);
-      this.snackBar.open('Undone: Event restored', 'Close', { duration: 3000 });
+    if (last?.undoFn) {
+      last.undoFn();
     }
   }
 
-  private showUndoToast(action: string) {
-    const actionLabel = action === 'approve' ? 'Event approved' : action;
-    this.snackBar
-      .open(`${actionLabel} completed`, 'UNDO', { duration: 5000 })
-      .onAction()
-      .subscribe(() => this.undo());
+  private showUndoToast(action: string, undoFn: () => void) {
+    const actionText = action === 'approve' ? 'Event approved' : `${action} completed`;
+    this.notifications.showWithUndo(actionText, undoFn, 5000);
   }
 }
 

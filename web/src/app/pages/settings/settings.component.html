@@ -1,9 +1,97 @@
-<div class="wrap">
-  <h2>Settings</h2>
-  <p class="muted">Configure your preferences and integrations.</p>
-  <mat-card>
-    <h3>Preferences</h3>
-    <p class="muted">Settings coming soon...</p>
-  </mat-card>
-</div>
+<div class="settings" [@fadeSlideIn]>
+  <div class="header">
+    <h2>Settings</h2>
+    <p class="muted">Configure your EventFlow preferences</p>
+  </div>
 
+  <mat-card class="settings-card">
+    <h3>Auto-Approve</h3>
+    <p class="muted">Automatically approve high-confidence event suggestions</p>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <label>Enable Auto-Approve</label>
+        <p class="hint">Automatically add events to your calendar when confidence is high</p>
+      </div>
+      <mat-slide-toggle
+        [(ngModel)]="settings.autoApprove"
+        (change)="onAutoApproveToggle()"
+        [disabled]="loading">
+      </mat-slide-toggle>
+    </div>
+
+    <div class="setting-row" *ngIf="settings.autoApprove">
+      <div class="setting-info">
+        <label>Confidence Threshold</label>
+        <p class="hint">Only auto-approve suggestions with confidence above this threshold</p>
+        <span class="value">{{ getConfidencePercentage() }}%</span>
+      </div>
+      <mat-slider
+        [(ngModel)]="settings.confidenceMin"
+        [min]="0.5"
+        [max]="1.0"
+        [step]="0.05"
+        [disabled]="loading"
+        (input)="onConfidenceMinChange()">
+      </mat-slider>
+    </div>
+
+    <div class="preview" *ngIf="settings.autoApprove">
+      <mat-icon>info</mat-icon>
+      <span>With these settings, approximately <strong>{{ previewCount }}</strong> suggestions would be auto-approved</span>
+    </div>
+  </mat-card>
+
+  <mat-card class="settings-card">
+    <h3>General</h3>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <label>Timezone</label>
+        <p class="hint">Default timezone for event times</p>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-select [(ngModel)]="settings.timezone" [disabled]="loading">
+          <mat-option value="UTC">UTC</mat-option>
+          <mat-option value="America/New_York">Eastern Time (ET)</mat-option>
+          <mat-option value="America/Chicago">Central Time (CT)</mat-option>
+          <mat-option value="America/Denver">Mountain Time (MT)</mat-option>
+          <mat-option value="America/Los_Angeles">Pacific Time (PT)</mat-option>
+          <mat-option value="Europe/London">London (GMT)</mat-option>
+          <mat-option value="Europe/Budapest">Budapest (CET)</mat-option>
+          <mat-option value="Europe/Berlin">Berlin (CET)</mat-option>
+          <mat-option value="Asia/Tokyo">Tokyo (JST)</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <label>Default Reminder</label>
+        <p class="hint">Default reminder time in minutes before events</p>
+      </div>
+      <mat-form-field appearance="outline">
+        <input
+          matInput
+          type="number"
+          [(ngModel)]="settings.defaultReminder"
+          [disabled]="loading"
+          min="0"
+          max="1440">
+        <span matSuffix>minutes</span>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <div class="actions">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveSettings()"
+      [disabled]="loading || saving">
+      <mat-icon *ngIf="!saving">save</mat-icon>
+      <mat-spinner *ngIf="saving" diameter="20"></mat-spinner>
+      {{ saving ? 'Saving...' : 'Save Settings' }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,164 @@
+scalar DateTime
+scalar JSON
+
+type User {
+  id: ID!
+  email: String!
+  name: String
+  events: [Event!]!
+  suggestions: [EventSuggestion!]!
+  connectors: [Connector!]!
+  settings: UserSettings
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type UserSettings {
+  id: ID!
+  timezone: String!
+  defaultReminder: Int!
+  autoApprove: Boolean!
+  confidenceMin: Float!
+}
+
+type Event {
+  id: ID!
+  userId: String!
+  title: String!
+  description: String
+  start: DateTime!
+  end: DateTime
+  timezone: String!
+  location: String
+  attendees: [String!]!
+  reminders: [Int!]!
+  recurrence: String
+  googleEventId: String
+  outlookEventId: String
+  appleEventId: String
+  source: String
+  rawText: String
+  confidence: Float
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type EventSuggestion {
+  id: ID!
+  userId: String!
+  title: String!
+  description: String
+  start: DateTime
+  end: DateTime
+  timezone: String!
+  location: String
+  attendees: [String!]!
+  reminders: [Int!]!
+  confidence: Float!
+  rawText: String!
+  source: String!
+  sourceMeta: JSON
+  status: SuggestionStatus!
+  approvedAt: DateTime
+  snoozedUntil: DateTime
+  eventId: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum SuggestionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SNOOZED
+}
+
+type Connector {
+  id: ID!
+  userId: String!
+  provider: ConnectorProvider!
+  email: String
+  phone: String
+  enabled: Boolean!
+  pollInterval: Int!
+  lastPolled: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum ConnectorProvider {
+  GMAIL
+  GOOGLE_CALENDAR
+  OUTLOOK
+  APPLE_CALENDAR
+  TWILIO_SMS
+}
+
+# Queries
+type Query {
+  me: User
+  events(
+    start: DateTime
+    end: DateTime
+    limit: Int = 100
+  ): [Event!]!
+  event(id: ID!): Event
+  suggestions(
+    status: SuggestionStatus
+    limit: Int = 50
+  ): [EventSuggestion!]!
+  suggestion(id: ID!): EventSuggestion
+  connectors: [Connector!]!
+}
+
+# Mutations
+type Mutation {
+  extractEvent(input: ExtractEventInput!): EventSuggestion!
+  approveSuggestion(id: ID!): Event!
+  rejectSuggestion(id: ID!): EventSuggestion!
+  snoozeSuggestion(id: ID!, until: DateTime!): EventSuggestion!
+  createEvent(input: CreateEventInput!): Event!
+  updateEvent(id: ID!, input: UpdateEventInput!): Event!
+  deleteEvent(id: ID!): Boolean!
+  connectGmail(code: String!): Connector!
+  getGoogleAuthUrl: String!
+  disconnectConnector(id: ID!): Boolean!
+  pollConnector(id: ID!): [EventSuggestion!]!
+  updateSettings(input: UpdateSettingsInput!): UserSettings!
+}
+
+# Inputs
+input ExtractEventInput {
+  text: String!
+  source: String!
+  sourceMeta: JSON
+}
+
+input CreateEventInput {
+  title: String!
+  description: String
+  start: DateTime!
+  end: DateTime
+  timezone: String!
+  location: String
+  attendees: [String!]
+  reminders: [Int!]
+}
+
+input UpdateEventInput {
+  title: String
+  description: String
+  start: DateTime
+  end: DateTime
+  location: String
+  attendees: [String!]
+  reminders: [Int!]
+}
+
+input UpdateSettingsInput {
+  timezone: String
+  defaultReminder: Int
+  autoApprove: Boolean
+  confidenceMin: Float
+}
+

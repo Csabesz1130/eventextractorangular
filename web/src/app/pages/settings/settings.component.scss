@@ -1,9 +1,104 @@
-.wrap {
+.settings {
   padding: 16px;
 }
 
-.muted {
-  color: var(--muted);
-  margin-top: 4px;
+.header {
+  margin-bottom: 24px;
+
+  h2 {
+    margin: 0 0 4px 0;
+  }
+
+  .muted {
+    color: var(--muted);
+    margin: 0;
+  }
 }
 
+.settings-card {
+  margin-bottom: 24px;
+  padding: 24px;
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+  }
+
+  > .muted {
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .setting-info {
+    flex: 1;
+    margin-right: 24px;
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 0;
+    }
+
+    .value {
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+  }
+
+  mat-slider {
+    width: 200px;
+  }
+
+  mat-form-field {
+    width: 200px;
+  }
+}
+
+.preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(106, 158, 255, 0.1);
+  border-radius: 8px;
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 14px;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+  }
+
+  strong {
+    color: var(--text);
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}

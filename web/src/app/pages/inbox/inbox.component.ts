@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventService, EventSuggestion } from '../../services/event.service';
 import { fadeSlideIn } from '../../core/animations';
 import { UndoService } from '../../services/undo.service';
+import { WebSocketService } from '../../services/websocket.service';
+import { NotificationService } from '../../core/notification.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-inbox',
@@ -9,24 +12,50 @@ import { UndoService } from '../../services/undo.service';
   styleUrls: ['./inbox.component.scss'],
   animations: [fadeSlideIn]
 })
-export class InboxComponent implements OnInit {
+export class InboxComponent implements OnInit, OnDestroy {
   suggestions: EventSuggestion[] = [];
   loading = true;
   selectedIds = new Set<string>();
   selectMode = false;
   groupedSuggestions: any = {};
+  private subscriptions = new Subscription();
 
   constructor(
     private events: EventService,
-    private undo: UndoService
+    private undo: UndoService,
+    private ws: WebSocketService,
+    private notifications: NotificationService
   ) {}
 
   ngOnInit(): void {
-    this.events.suggestions$.subscribe(s => {
-      this.suggestions = s;
-      this.updateGrouping();
-    });
+    // Subscribe to suggestions
+    this.subscriptions.add(
+      this.events.suggestions$.subscribe(s => {
+        this.suggestions = s;
+        this.updateGrouping();
+      })
+    );
+
+    // Subscribe to WebSocket for real-time suggestions
+    this.subscriptions.add(
+      this.ws.newSuggestion$.subscribe(suggestion => {
+        this.notifications.showNewSuggestion(suggestion).onAction().subscribe(() => {
+          // Scroll to the new suggestion
+          const element = document.querySelector(`[data-suggestion-id="${suggestion.id}"]`);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        });
+        // Add to local suggestions
+        this.events.pushLocalSuggestion(suggestion);
+      })
+    );
+
     this.loading = false;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   get selectedCount() {

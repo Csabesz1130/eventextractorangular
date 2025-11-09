@@ -16,14 +16,17 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  exports: [
-    MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatSidenavModule,
-    MatListModule, MatMenuModule, MatInputModule, MatChipsModule, MatTooltipModule,
-    MatSnackBarModule, MatDividerModule, MatSlideToggleModule, MatDialogModule,
-    MatProgressSpinnerModule, MatCheckboxModule, MatFormFieldModule
-  ]
+      exports: [
+        MatButtonModule, MatIconModule, MatCardModule, MatToolbarModule, MatSidenavModule,
+        MatListModule, MatMenuModule, MatInputModule, MatChipsModule, MatTooltipModule,
+        MatSnackBarModule, MatDividerModule, MatSlideToggleModule, MatDialogModule,
+        MatProgressSpinnerModule, MatCheckboxModule, MatFormFieldModule, MatSliderModule,
+        MatSelectModule
+      ]
 })
 export class MaterialModule {}
 

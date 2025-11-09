@@ -1,4 +1,9 @@
-<mat-card class="card" [ngClass]="[confidenceClass, {selected: selected, editing: editing}]" (click)="onSelect()">
+    <mat-card 
+      class="card" 
+      [ngClass]="[confidenceClass, {selected: selected, editing: editing, approving: isApproving, 'quick-approve': quickApprove}]" 
+      (click)="quickApprove ? onCardClick() : onSelect()"
+      [tabindex]="quickApprove ? 0 : -1"
+      [attr.aria-label]="'Event: ' + (event.title || 'Untitled')">
   <div class="badge">
     <div class="left-badge">
       <mat-checkbox *ngIf="selectable" [checked]="selected" (click)="$event.stopPropagation()" (change)="onSelect()"></mat-checkbox>

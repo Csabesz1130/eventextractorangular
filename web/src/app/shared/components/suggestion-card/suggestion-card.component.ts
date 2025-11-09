@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, HostListener } from '@angular/core';
 import { EventSuggestion } from '../../../services/event.service';
 
 @Component({
@@ -10,13 +10,15 @@ export class SuggestionCardComponent {
   @Input() event!: EventSuggestion;
   @Input() selected = false;
   @Input() selectable = false;
+  @Input() quickApprove = false; // Enable click-anywhere-to-approve
   @Output() approve = new EventEmitter<void>();
   @Output() snooze = new EventEmitter<void>();
   @Output() edit = new EventEmitter<void>();
   @Output() select = new EventEmitter<boolean>();
-  
+
   editing = false;
   editedEvent: EventSuggestion = {} as EventSuggestion;
+  isApproving = false;
 
   get timeRange() {
     const s = this.event.start ? new Date(this.event.start) : null;
@@ -38,10 +40,45 @@ export class SuggestionCardComponent {
     return 'low-conf';
   }
   
+  @HostListener('keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    // Press 'a' to approve when card is focused
+    if (event.key === 'a' && !this.editing && !event.ctrlKey && !event.metaKey) {
+      event.preventDefault();
+      this.onApprove();
+    }
+    // Press 's' to snooze
+    if (event.key === 's' && !this.editing && !event.ctrlKey && !event.metaKey) {
+      event.preventDefault();
+      this.onSnooze();
+    }
+  }
+
+  onCardClick() {
+    // Click anywhere on card to approve if quickApprove is enabled
+    if (this.quickApprove && !this.editing && !this.isApproving) {
+      this.onApprove();
+    }
+  }
+
   onSelect() {
     if (this.selectable) {
       this.select.emit(!this.selected);
     }
+  }
+
+  onApprove() {
+    if (this.isApproving) return;
+    this.isApproving = true;
+    this.approve.emit();
+    // Reset after animation
+    setTimeout(() => {
+      this.isApproving = false;
+    }, 300);
+  }
+
+  onSnooze() {
+    this.snooze.emit();
   }
   
   startEdit() {

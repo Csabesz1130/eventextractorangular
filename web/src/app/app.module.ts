@@ -3,6 +3,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { InMemoryCache } from '@apollo/client/core';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './core/material.module';
@@ -33,7 +36,22 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     FormsModule,
     MaterialModule,
     AppRoutingModule,
-    FullCalendarModule
+    FullCalendarModule,
+    ApolloModule
+  ],
+  providers: [
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: 'http://localhost:8911/graphql',
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
   ],
   bootstrap: [AppComponent]
 })

@@ -31,16 +31,17 @@
     <div *ngFor="let group of groupedSuggestionsList" class="group">
       <h3 class="group-title">{{ getGroupLabel(group[0]) }}</h3>
       <div class="grid">
-        <app-suggestion-card
-          *ngFor="let s of group[1]"
-          [event]="s"
-          [selectable]="selectMode"
-          [selected]="isSelected(s)"
-          (approve)="onApprove(s)"
-          (snooze)="onSnooze(s)"
-          (edit)="onEdit(s)"
-          (select)="onSelect(s, $event)">
-        </app-suggestion-card>
+            <app-suggestion-card
+              *ngFor="let s of group[1]"
+              [event]="s"
+              [selectable]="selectMode"
+              [selected]="isSelected(s)"
+              [quickApprove]="!selectMode"
+              (approve)="onApprove(s)"
+              (snooze)="onSnooze(s)"
+              (edit)="onEdit(s)"
+              (select)="onSelect(s, $event)">
+            </app-suggestion-card>
       </div>
     </div>
   </div>

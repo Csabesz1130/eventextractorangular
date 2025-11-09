@@ -1,0 +1,8 @@
+[web]
+  port = 8910
+  apiProxyPath = "/.redwood/functions"
+[api]
+  port = 8911
+[browser]
+  open = true
+

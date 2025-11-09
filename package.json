@@ -1,0 +1,26 @@
+{
+  "name": "eventextractorangular",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "api",
+    "web"
+  ],
+  "scripts": {
+    "dev": "yarn rw dev",
+    "build": "yarn rw build",
+    "start": "yarn rw start",
+    "test": "yarn rw test",
+    "lint": "yarn rw lint",
+    "prisma": "yarn rw prisma"
+  },
+  "devDependencies": {
+    "@redwoodjs/core": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=18.x",
+    "yarn": ">=1.15"
+  },
+  "packageManager": "yarn@1.22.19"
+}
+

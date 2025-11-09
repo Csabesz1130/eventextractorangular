@@ -1,0 +1,21 @@
+{
+  "name": "@eventextractor/api",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@redwoodjs/graphql-server": "^7.0.0",
+    "@redwoodjs/api": "^7.0.0",
+    "@prisma/client": "^5.0.0",
+    "graphql": "^16.8.0",
+    "graphql-tag": "^2.12.6",
+    "googleapis": "^126.0.0",
+    "node-fetch": "^2.7.0",
+    "ical-generator": "^7.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "prisma": "^5.0.0",
+    "typescript": "^5.0.0"
+  }
+}
+

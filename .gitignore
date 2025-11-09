@@ -150,3 +150,14 @@ docker-compose.override.yml
 *.cmd
 *.ps1.bak
 .cursor/
+
+# RedwoodJS root directory
+.redwood/
+
+# Timestamp-based temporary files (Unix timestamps in milliseconds - 13+ digits)
+[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*
+
+# Telemetry files
+telemetry.txt
+telemetry.*
+*.telemetry

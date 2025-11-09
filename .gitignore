@@ -84,6 +84,22 @@ web/.angular/
 web/dist/
 web/.sass-cache/
 
+# RedwoodJS
+api/.redwood/
+api/api/generated/
+api/api/prisma/
+api/api/prisma/migrations/
+api/api/prisma/migrations/schema.prisma
+api/api/prisma/migrations/schema.prisma
+
+node_modules/
+yarn.lock
+package-lock.json
+
+# Docker
+docker-compose.yml
+docker-compose.override.yml
+docker-compose.override.yml
 # Docker
 .dockerignore
 
@@ -91,4 +107,5 @@ web/.sass-cache/
 *.bak
 *.swp
 *~
+*.cmd
 

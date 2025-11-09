@@ -6,4 +6,6 @@ spacy==3.8.0
 python-dateutil==2.8.2
 pytz==2024.1
 dateparser>=1.2.0
+icalendar==5.0.12
+langdetect==1.0.9
 

@@ -19,13 +19,17 @@ def strip_quoted_text(text: str) -> str:
     text = re.sub(r"\n--\n.*", "", text, flags=re.S)
     return text.strip()
 
-def extract_temporal_candidates(text: str, timezone: str = "UTC", languages: Optional[list] = None):
+def extract_temporal_candidates(text: str, timezone: str = "UTC", languages: Optional[list] = None, locale: str = "en"):
+    # Default to locale if languages not provided
+    if languages is None:
+        languages = [locale, "en"]  # Try locale first, then English
+    
     settings = {
         "RETURN_AS_TIMEZONE_AWARE": True,
         "TIMEZONE": timezone,
         "PREFER_DATES_FROM": "future",
     }
-    res = search_dates(text, settings=settings, languages=languages or ["en"])
+    res = search_dates(text, settings=settings, languages=languages)
     return res or []
 
 def format_iso(dt: datetime.datetime, timezone: str = "UTC"):
@@ -113,8 +117,18 @@ async def call_openai_extract(prompt: str):
 async def extract_event_from_text(text: str, source: str = "unknown", source_meta: Optional[dict] = None,
                                   locale: str = "en", timezone: str = "UTC") -> Dict[str, Any]:
     working = strip_quoted_text(text)
+    
+    # Try to detect language if not provided
+    if locale == "en" and source_meta:
+        detected_locale = source_meta.get("locale", "en")
+        if detected_locale and detected_locale != "en":
+            locale = detected_locale
+    
+    # Load appropriate spaCy model based on locale
+    # For now, we'll use English model for all, but this can be extended
+    # In production, you'd load hu_core_news_sm for Hungarian, etc.
     entities = spaCy_entities(working)
-    temporal_candidates = extract_temporal_candidates(working, timezone=timezone, languages=[locale])
+    temporal_candidates = extract_temporal_candidates(working, timezone=timezone, locale=locale)
     start_dt = None
     end_dt = None
     if temporal_candidates:
